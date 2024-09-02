@@ -18,15 +18,14 @@ export interface SessionContext extends Context {
 
 const prefix = 'telegraf:'
 const store: AsyncSessionStore<any> = {
-  async get(key) {
-    const value = await redis.get(prefix + key)
-    return value ? JSON.parse(value) : undefined
+  get(key) {
+    return redis.get<any>(prefix + key)
   },
-  async set(key, session) {
-    return await redis.set(prefix + key, JSON.stringify(session))
+  set(key, session) {
+    return redis.set(prefix + key, session)
   },
-  async delete(key) {
-    return await redis.del(prefix + key)
+  delete(key) {
+    return redis.del(prefix + key)
   },
 }
 

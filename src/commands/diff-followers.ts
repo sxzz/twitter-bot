@@ -28,16 +28,13 @@ export function initDiffFollowers(bot: Bot): BotCommand {
     }
 
     const [latestKey, prevKey] = keyList.slice(0, 2)
-    const [prevFollowersRaw, latestFollowersRaw] = await Promise.all([
-      redis.get(prevKey),
-      redis.get(latestKey),
+    const [prevFollowers, latestFollowers] = await Promise.all([
+      redis.get<User[]>(prevKey),
+      redis.get<User[]>(latestKey),
     ])
-    if (!prevFollowersRaw || !latestFollowersRaw) {
+    if (!prevFollowers || !latestFollowers) {
       return ctx.reply('未知数据错误')
     }
-
-    const prevFollowers: User[] = JSON.parse(prevFollowersRaw)
-    const latestFollowers: User[] = JSON.parse(latestFollowersRaw)
 
     const newFollowers = latestFollowers.filter(
       (follower) => !prevFollowers.some((f) => f.id === follower.id),

@@ -39,7 +39,7 @@ export function initSaveFollowers(bot: Bot): BotCommand {
     const key = `followers:${user.id}:${Date.now()}`
     await Promise.all([
       redis.sadd(`followers:${user.id}`, key),
-      redis.set(key, JSON.stringify(simplified)),
+      redis.set(key, simplified),
     ])
     return editMessage(msg, `已保存 ${followers.length} 个关注者。`)
   })
