@@ -25,8 +25,6 @@ const commands: BotCommand[] = [
 const helpMsg = commands
   .map(({ command, description }) => `/${command} - ${description}`)
   .join('\n')
-bot.start((ctx) => {
-  return ctx.reply(helpMsg)
-})
+bot.start((ctx) => ctx.reply(helpMsg))
 bot.help((ctx) => ctx.reply(helpMsg))
 bot.telegram.setMyCommands(commands)
