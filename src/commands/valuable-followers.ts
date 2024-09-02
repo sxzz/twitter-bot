@@ -1,13 +1,13 @@
-import { objectPick } from '@antfu/utils'
-import { redis } from '../utils/redis'
+// TODO remove it
+import chunk from 'lodash.chunk'
 import { editMessage } from '../utils/telegram'
-import { paginate } from '../utils/twitter'
+import { formatUser, paginate } from '../utils/twitter'
 import type { Bot } from '..'
 import type { User } from 'rettiwt-api'
 import type { BotCommand } from 'telegraf/types'
 
-export function initSaveFollowers(bot: Bot): BotCommand {
-  const command = 'save_followers'
+export function initValuableFollowers(bot: Bot): BotCommand {
+  const command = 'valuable_followers'
   bot.command(command, async (ctx) => {
     if (!ctx.session?.apiToken)
       return ctx.reply('请先使用 /register 登记你的推特账号')
@@ -22,8 +22,7 @@ export function initSaveFollowers(bot: Bot): BotCommand {
     const user = await ctx.rettiwt.user.details(username)
     if (!user) return ctx.reply('用户不存在')
 
-    const msg = await ctx.reply(`正在保存 ${user.fullName} 的关注者`)
-
+    const msg = await ctx.reply(`正在获取 ${user.fullName} 的关注者`)
     let followers: User[] = []
     try {
       followers = await paginate(async (cursor, page) => {
@@ -37,19 +36,23 @@ export function initSaveFollowers(bot: Bot): BotCommand {
       return editMessage(msg, `获取关注者失败\n${error}`)
     }
 
-    const simplified = followers
-      .map((user) =>
-        objectPick(user, ['id', 'fullName', 'userName', 'description']),
-      )
-      .sort((a, b) => a.id.localeCompare(b.id))
+    followers = followers
+      .filter((follower) => follower.followersCount > 0)
+      .sort((a, b) => b.followersCount - a.followersCount)
 
-    const key = `followers:${user.id}:${Date.now()}`
-    await Promise.all([
-      redis.sadd(`followers:${user.id}`, key),
-      redis.set(key, simplified),
-    ])
-    return editMessage(msg, `已保存 ${followers.length} 个关注者。`)
+    await editMessage(msg, `共 ${followers.length} 个关注者`)
+
+    const followersGroup = chunk(followers, 20)
+    for (const [i, followers] of followersGroup.entries()) {
+      const lines = followers.map(
+        (follower, index) =>
+          `${i * 20 + (index + 1)}\\. ${formatUser(follower)}: ${follower.followersCount}`,
+      )
+      await ctx.replyWithMarkdownV2(lines.join('\n'), {
+        link_preview_options: { is_disabled: true },
+      })
+    }
   })
 
-  return { command, description: '保存指定用户的关注者' }
+  return { command, description: '按粉丝数排序关注列表' }
 }

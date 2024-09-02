@@ -1,3 +1,4 @@
+import { escapeText } from './telegram'
 import type { CursoredData, Tweet, User } from 'rettiwt-api'
 
 export async function paginate<T extends Tweet | User>(
@@ -19,4 +20,8 @@ export async function paginate<T extends Tweet | User>(
     page++
   }
   return data
+}
+
+export function formatUser(user: User) {
+  return `[${escapeText(user.fullName)}](${escapeText(`https://x.com/${user.userName}`)})` as const
 }

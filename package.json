@@ -15,6 +15,7 @@
     "@antfu/utils": "^0.7.10",
     "@upstash/redis": "^1.34.0",
     "dedent": "^1.5.3",
+    "lodash.chunk": "^4.2.0",
     "nitropack": "latest",
     "rettiwt-api": "^3.1.1",
     "telegraf": "^4.16.3"
@@ -22,9 +23,13 @@
   "devDependencies": {
     "@sxzz/eslint-config": "^4.1.0",
     "@sxzz/prettier-config": "^2.0.2",
+    "@types/lodash.chunk": "^4.2.9",
     "eslint": "^9.9.1",
     "prettier": "^3.3.3",
     "typescript": "^5.5.4"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   },
   "prettier": "@sxzz/prettier-config"
 }

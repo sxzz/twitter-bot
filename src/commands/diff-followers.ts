@@ -1,5 +1,6 @@
 import dedent from 'dedent'
 import { redis } from '../utils/redis'
+import { formatUser } from '../utils/twitter'
 import type { Bot } from '..'
 import type { User } from 'rettiwt-api'
 import type { BotCommand } from 'telegraf/types'
@@ -64,30 +65,4 @@ export function initDiffFollowers(bot: Bot): BotCommand {
   })
 
   return { command, description: '比较指定用户的关注者变化' }
-}
-
-function formatUser(user: User) {
-  return `[${escapeText(user.fullName)}](${escapeText(`https://x.com/${user.userName}`)})`
-}
-
-function escapeText(text: string) {
-  return text
-    .replaceAll('_', String.raw`\_`)
-    .replaceAll('*', String.raw`\*`)
-    .replaceAll('[', String.raw`\[`)
-    .replaceAll(']', String.raw`\]`)
-    .replaceAll('(', String.raw`\(`)
-    .replaceAll(')', String.raw`\)`)
-    .replaceAll('~', String.raw`\~`)
-    .replaceAll('`', '\\`')
-    .replaceAll('>', String.raw`\>`)
-    .replaceAll('#', String.raw`\#`)
-    .replaceAll('+', String.raw`\+`)
-    .replaceAll('-', String.raw`\-`)
-    .replaceAll('=', String.raw`\=`)
-    .replaceAll('|', String.raw`\|`)
-    .replaceAll('{', String.raw`\{`)
-    .replaceAll('}', String.raw`\}`)
-    .replaceAll('.', String.raw`\.`)
-    .replaceAll('!', String.raw`\!`)
 }

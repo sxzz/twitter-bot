@@ -4,6 +4,7 @@ import { initClear } from './commands/clear'
 import { initDiffFollowers } from './commands/diff-followers'
 import { initRegister } from './commands/register'
 import { initSaveFollowers } from './commands/save-followers'
+import { initValuableFollowers } from './commands/valuable-followers'
 import { sessionMiddleware, type SessionContext } from './context/session'
 import { twitterMiddleware, type TwitterContext } from './context/twitter'
 import type { BotCommand } from 'telegraf/types'
@@ -20,6 +21,7 @@ const commands: BotCommand[] = [
   initRegister(bot),
   initSaveFollowers(bot),
   initDiffFollowers(bot),
+  initValuableFollowers(bot),
   initClear(bot),
 ]
 
