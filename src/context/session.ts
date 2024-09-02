@@ -4,11 +4,13 @@ import { REDIS_URL } from '../utils/redis'
 
 export enum State {
   REGISTER_API_KEY,
+  REGISTER_USERNAME,
 }
 
 export interface SessionData {
   state?: State
   apiToken?: string
+  username?: string
 }
 export interface SessionContext extends Context {
   session?: SessionData

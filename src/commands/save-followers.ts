@@ -10,11 +10,14 @@ export function initSaveFollowers(bot: Bot): BotCommand {
   bot.command(command, async (ctx) => {
     if (!ctx.session?.apiToken)
       return ctx.reply('请先使用 /register 登记你的推特账号')
-    if (ctx.args.length !== 1) {
-      return ctx.reply('请提供一个用户名')
+    const username = ctx.args[0] || ctx.session?.username
+    if (!username) {
+      return ctx.reply(
+        '请提供一个用户名，或者先使用 /register 登记你的推特账号',
+      )
     }
-    const username = ctx.args[0]
 
+    ctx.sendChatAction('typing')
     const user = await ctx.rettiwt.user.details(username)
     if (!user) return ctx.reply('用户不存在')
 
