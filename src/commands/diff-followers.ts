@@ -27,6 +27,7 @@ export function initDiffFollowers(bot: Bot): BotCommand {
       return ctx.reply('没有足够的数据进行比较')
     }
 
+    // TODO choose data to compare
     const [latestKey, prevKey] = keyList.slice(0, 2)
     const [prevFollowers, latestFollowers] = await Promise.all([
       redis.get<User[]>(prevKey),

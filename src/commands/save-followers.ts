@@ -3,6 +3,7 @@ import { redis } from '../utils/redis'
 import { editMessage } from '../utils/telegram'
 import { paginate } from '../utils/twitter'
 import type { Bot } from '..'
+import type { User } from 'rettiwt-api'
 import type { BotCommand } from 'telegraf/types'
 
 export function initSaveFollowers(bot: Bot): BotCommand {
@@ -22,13 +23,19 @@ export function initSaveFollowers(bot: Bot): BotCommand {
     if (!user) return ctx.reply('用户不存在')
 
     const msg = await ctx.reply(`正在保存 ${user.fullName} 的关注者`)
-    const followers = await paginate(async (cursor, page) => {
-      await editMessage(
-        msg,
-        `正在保存 ${user.fullName} 的关注者，第 ${page} 页...`,
-      )
-      return ctx.rettiwt.user.followers(user.id, 50, cursor)
-    }, 50)
+    let followers: User[] = []
+
+    try {
+      followers = await paginate(async (cursor, page) => {
+        await editMessage(
+          msg,
+          `正在保存 ${user.fullName} 的关注者，第 ${page} 页...`,
+        )
+        return ctx.rettiwt.user.followers(user.id, 50, cursor)
+      }, 50)
+    } catch (error) {
+      return editMessage(msg, `获取关注者失败\n${error}`)
+    }
 
     const simplified = followers
       .map((user) =>
