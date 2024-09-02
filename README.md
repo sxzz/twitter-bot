@@ -1,8 +1,4 @@
-# Telegram Bot Starter
-
-A starter template for Telegram bots on Serverless, with [Vercel](https://vercel.com), [Netlify](https://netlify.com), and [more](https://nitro.unjs.io/deploy) support.
-
-Built top of [Nitro](https://nitro.unjs.io/) and [Telegraf](https://telegraf.js.org).
+# Twitter Bot for Telegram
 
 ## Local Development
 
@@ -20,10 +16,6 @@ Built top of [Nitro](https://nitro.unjs.io/) and [Telegraf](https://telegraf.js.
 1. Deploy on [Vercel](https://vercel.com), [Netlify](https://netlify.com) or [others](https://nitro.unjs.io/deploy), with `BOT_TOKEN` and `SECRET_HASH` environment variables.
 2. Visit https://your-domain.com/telegram-hook?setWebhook=true
 3. Send `/start` to your bot.
-
-## Credits
-
-Thanks to the project [jsjoeio/telegram-bot-template](https://github.com/jsjoeio/telegram-bot-template).
 
 ## Sponsors
 
