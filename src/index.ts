@@ -1,6 +1,7 @@
 import process from 'node:process'
 import dedent from 'dedent'
 import { Telegraf } from 'telegraf'
+import { initClear } from './commands/clear'
 import { initDiffFollowers } from './commands/diff-followers'
 import { initRegister } from './commands/register'
 import { initSaveFollowers } from './commands/save-followers'
@@ -20,6 +21,7 @@ const commands: BotCommand[] = [
   initRegister(bot),
   initSaveFollowers(bot),
   initDiffFollowers(bot),
+  initClear(bot),
 ]
 
 const helpMsg = commands
