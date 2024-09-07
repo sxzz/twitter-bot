@@ -11,6 +11,8 @@ export interface SessionData {
   state?: State
   apiToken?: string
   username?: string
+  diffKeys?: string[]
+  firstDiff?: string
 }
 export interface SessionContext extends Context {
   session?: SessionData

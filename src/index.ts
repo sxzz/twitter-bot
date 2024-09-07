@@ -31,3 +31,8 @@ const helpMsg = commands
 bot.start((ctx) => ctx.reply(helpMsg))
 bot.help((ctx) => ctx.reply(helpMsg))
 bot.telegram.setMyCommands(commands)
+
+export enum CallbackQuery {
+  DIFF_FOLLOWERS = '00',
+  DIFF_FOLLOWERS_DONE = '01',
+}
