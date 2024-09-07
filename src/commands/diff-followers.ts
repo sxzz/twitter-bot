@@ -47,15 +47,13 @@ export function initDiffFollowers(bot: Bot): BotCommand {
 
     if (token === CallbackQuery.DIFF_FOLLOWERS) {
       ctx.session.firstDiff = data
-      await ctx.answerCbQuery('已选择')
       const keys = ctx.session.diffKeys!
-      try {
-        return await ctx.editMessageReplyMarkup({
+      return Promise.all([
+        ctx.answerCbQuery('已选择'),
+        ctx.editMessageReplyMarkup({
           inline_keyboard: genInlineKeyboardButton(keys, data),
-        })
-      } catch (error) {
-        return ctx.reply(String(error))
-      }
+        }),
+      ]).catch((error) => ctx.reply(String(error)))
     } else if (token === CallbackQuery.DIFF_FOLLOWERS_DONE) {
       let prevKey = ctx.session.firstDiff
       if (prevKey === data) {
