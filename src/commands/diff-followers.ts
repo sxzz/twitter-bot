@@ -126,6 +126,7 @@ export function initDiffFollowers(bot: Bot): BotCommand {
 const formatter = new Intl.DateTimeFormat('zh-CN', {
   dateStyle: 'medium',
   timeStyle: 'medium',
+  timeZone: 'Asia/Shanghai',
 })
 
 function genInlineKeyboardButton(
