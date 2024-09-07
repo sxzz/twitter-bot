@@ -13,8 +13,6 @@ export default eventHandler(async (evt) => {
   const webhookUrl = `https://${host}/telegram-hook?secret_hash=${SECRET_HASH}`
   const isSet = await bot.telegram.setWebhook(webhookUrl)
   const info = await bot.telegram.getWebhookInfo()
-  return `Set webhook to ${webhookUrl.replaceAll(
-    SECRET_HASH,
-    '*',
-  )}: ${isSet}<br/>${JSON.stringify(info).replaceAll(SECRET_HASH, '*')}`
+  const url = webhookUrl.replaceAll(SECRET_HASH, '****')
+  return `Set webhook to ${url}: ${isSet}<br/>${JSON.stringify(info).replaceAll(SECRET_HASH, '****')}`
 })
