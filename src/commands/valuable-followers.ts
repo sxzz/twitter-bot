@@ -1,5 +1,6 @@
 // TODO remove it
 import chunk from 'lodash.chunk'
+import { requireRegister } from '../middleware/require-register'
 import { editMessage } from '../utils/telegram'
 import { formatUser, paginate } from '../utils/twitter'
 import type { Bot } from '..'
@@ -8,9 +9,7 @@ import type { BotCommand } from 'telegraf/types'
 
 export function initValuableFollowers(bot: Bot): BotCommand {
   const command = 'valuable_followers'
-  bot.command(command, async (ctx) => {
-    if (!ctx.session?.apiToken)
-      return ctx.reply('请先使用 /register 登记你的推特账号')
+  bot.command(command, requireRegister, async (ctx) => {
     const username = ctx.args[0] || ctx.session?.username
     if (!username) {
       return ctx.reply(

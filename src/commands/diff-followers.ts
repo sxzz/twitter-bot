@@ -1,6 +1,7 @@
 import dedent from 'dedent'
 import { callbackQuery } from 'telegraf/filters'
 import { CallbackQuery, type Bot } from '..'
+import { requireRegister } from '../middleware/require-register'
 import { redis } from '../utils/redis'
 import { escapeText } from '../utils/telegram'
 import { formatUser } from '../utils/twitter'
@@ -9,9 +10,7 @@ import type { BotCommand, InlineKeyboardButton } from 'telegraf/types'
 
 export function initDiffFollowers(bot: Bot): BotCommand {
   const command = 'diff_followers'
-  bot.command(command, async (ctx) => {
-    if (!ctx.session?.apiToken)
-      return ctx.reply('请先使用 /register 登记你的推特账号')
+  bot.command(command, requireRegister, async (ctx) => {
     const username = ctx.args[0] || ctx.session?.username
     if (!username) {
       return ctx.reply(
