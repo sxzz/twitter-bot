@@ -23,6 +23,7 @@ export function initSaveFollowers(bot: Bot): BotCommand {
 
     const msg = await ctx.reply(`正在保存 ${user.fullName} 的关注者`)
 
+    // TODO queue this
     let followers: User[] = []
     try {
       followers = await paginate(async (cursor, page) => {
