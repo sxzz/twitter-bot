@@ -18,8 +18,13 @@ export function initSaveFollowers(bot: Bot): BotCommand {
     }
 
     ctx.sendChatAction('typing')
-    const user = await ctx.rettiwt.user.details(username)
-    if (!user) return ctx.reply('用户不存在')
+    let user: User | undefined
+    try {
+      user = await ctx.rettiwt.user.details(username)
+      if (!user) return ctx.reply('用户不存在')
+    } catch (error) {
+      return ctx.reply(`获取关注者失败\n${error}`)
+    }
 
     const msg = await ctx.reply(`正在保存 ${user.fullName} 的关注者`)
 
