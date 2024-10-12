@@ -31,13 +31,13 @@ export function initSaveFollowers(bot: Bot): BotCommand {
     // TODO queue this
     let followers: User[] = []
     try {
-      followers = await paginate(async (cursor, page) => {
+      followers = await paginate(async (cursor, page, count) => {
         await editMessage(
           msg,
           `正在保存 ${user.fullName} 的关注者，第 ${page} 页...`,
         )
-        return ctx.rettiwt.user.followers(user.id, 50, cursor)
-      }, 50)
+        return ctx.rettiwt.user.followers(user.id, count, cursor)
+      }, 40)
     } catch (error) {
       return editMessage(msg, `获取关注者失败\n${error}`)
     }

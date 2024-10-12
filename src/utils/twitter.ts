@@ -5,6 +5,7 @@ export async function paginate<T extends Tweet | User>(
   exector: (
     cursor: string | undefined,
     page: number,
+    count: number,
   ) => Promise<CursoredData<T>>,
   count: number,
 ): Promise<T[]> {
@@ -13,7 +14,7 @@ export async function paginate<T extends Tweet | User>(
   let page = 1
 
   while (true) {
-    const res = await exector(cursor, page)
+    const res = await exector(cursor, page, count)
     data.push(...res.list)
     cursor = res.next.value
     if (res.list.length < count) break
