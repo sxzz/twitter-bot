@@ -10,27 +10,20 @@ import type { BotCommand } from 'telegraf/types'
 export function initValuableFollowers(bot: Bot): BotCommand {
   const command = 'valuable_followers'
   bot.command(command, requireRegister, async (ctx) => {
-    const username = ctx.args[0] || ctx.session?.username
-    if (!username) {
-      return ctx.reply(
-        '请提供一个用户名，或者先使用 /register 登记你的推特账号',
-      )
-    }
-
     ctx.sendChatAction('typing')
-    const user = await ctx.rettiwt.user.details(username)
+    const user = await ctx.rettiwt.user.details(ctx.session!.username!)
     if (!user) return ctx.reply('用户不存在')
 
     const msg = await ctx.reply(`正在获取 ${user.fullName} 的关注者`)
     let followers: User[] = []
     try {
-      followers = await paginate(async (cursor, page) => {
+      followers = await paginate(async (cursor, page, count) => {
         await editMessage(
           msg,
           `正在保存 ${user.fullName} 的关注者，第 ${page} 页...`,
         )
-        return ctx.rettiwt.user.followers(user.id, 50, cursor)
-      }, 50)
+        return ctx.rettiwt.user.followers(user.id, count, cursor)
+      }, 40)
     } catch (error) {
       return editMessage(msg, `获取关注者失败\n${error}`)
     }
