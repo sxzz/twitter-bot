@@ -8,6 +8,7 @@ import { initValuableFollowers } from './commands/valuable-followers'
 import { sessionMiddleware, type SessionContext } from './context/session'
 import { twitterMiddleware, type TwitterContext } from './context/twitter'
 import type { BotCommand } from 'telegraf/types'
+import { initDeleteData } from './commands/delete-data'
 
 const BOT_TOKEN = process.env.BOT_TOKEN!
 export const bot = new Telegraf<SessionContext & TwitterContext>(BOT_TOKEN)
@@ -23,6 +24,7 @@ const commands: BotCommand[] = [
   initDiffFollowers(bot),
   initValuableFollowers(bot),
   initClear(bot),
+  initDeleteData(bot),
 ]
 
 const helpMsg = commands
@@ -35,4 +37,5 @@ bot.telegram.setMyCommands(commands)
 export enum CallbackQuery {
   DIFF_FOLLOWERS = '00',
   DIFF_FOLLOWERS_DONE = '01',
+  DELETE_DATA = '02',
 }

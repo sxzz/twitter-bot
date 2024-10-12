@@ -2,10 +2,12 @@ import dedent from 'dedent'
 import { callbackQuery } from 'telegraf/filters'
 import { CallbackQuery, type Bot } from '..'
 import { requireRegister } from '../middleware/require-register'
+import { formatter } from '../utils/date'
 import { redis } from '../utils/redis'
 import { escapeText } from '../utils/telegram'
 import { formatUser } from '../utils/twitter'
 import type { User } from 'rettiwt-api'
+
 import type { BotCommand, InlineKeyboardButton } from 'telegraf/types'
 
 export function initDiffFollowers(bot: Bot): BotCommand {
@@ -120,13 +122,7 @@ export function initDiffFollowers(bot: Bot): BotCommand {
   return { command, description: '比较指定用户的关注者变化' }
 }
 
-const formatter = new Intl.DateTimeFormat('zh-CN', {
-  dateStyle: 'medium',
-  timeStyle: 'medium',
-  timeZone: 'Asia/Shanghai',
-})
-
-function genInlineKeyboardButton(
+export function genInlineKeyboardButton(
   keys: string[],
   selected?: string,
 ): InlineKeyboardButton[][] {

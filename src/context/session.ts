@@ -11,6 +11,7 @@ export interface SessionData {
   state?: State
   apiToken?: string
   username?: string
+  userid?: string
   diffKeys?: string[]
   firstDiff?: string
 }

@@ -1,5 +1,5 @@
 import dedent from 'dedent'
-import { Rettiwt } from 'rettiwt-api'
+import { Rettiwt, type User } from 'rettiwt-api'
 import { State } from '../context/session'
 import { plainText } from '../utils/telegram'
 import type { Bot } from '..'
@@ -38,11 +38,19 @@ export function initRegister(bot: Bot): BotCommand {
         )
       }
       case State.REGISTER_USERNAME: {
-        const username = ctx.message.text.trim()
+        let username = ctx.message.text.trim()
+        username = username[0] === '@' ? username.slice(1) : username
+
         if (!username) return ctx.reply('用户名不能为空，请重试。')
+        let userInfo: User | undefined
+        try {
+          userInfo = await ctx.rettiwt.user.details(username)
+        } catch {}
+        if (!userInfo) return ctx.reply('用户不存在，请重试。')
+
         ctx.session.state = undefined
-        ctx.session.username =
-          username[0] === '@' ? username.slice(1) : username
+        ctx.session.username = username
+        ctx.session.userid = userInfo.id
         return ctx.reply('🎉 登记成功！')
       }
     }
