@@ -24,8 +24,8 @@ importers:
         specifier: latest
         version: 2.9.7(@opentelemetry/api@1.8.0)(@upstash/redis@1.34.2)
       rettiwt-api:
-        specifier: ^4.1.1
-        version: 4.1.1
+        specifier: https://pkg.pr.new/sxzz/Rettiwt-API/rettiwt-api@98e317f
+        version: https://pkg.pr.new/sxzz/Rettiwt-API/rettiwt-api@98e317f
       telegraf:
         specifier: ^4.16.3
         version: 4.16.3
@@ -2724,16 +2724,17 @@ packages:
     resolution: {integrity: sha512-oKWePCxqpd6FlLvGV1VU0x7bkPmmCNolxzjMf4NczoDnQcIWrAF+cPtZn5i6n+RfD2d9i0tzpKnG6Yk168yIyw==}
     hasBin: true
 
-  rettiwt-api@4.1.1:
-    resolution: {integrity: sha512-sChKTQ3fznCNN9xoB8xJZw5w6O0J9yRY0egEo3Hcig/WsuAHLR8QgWeoNSV8iwn896IuzZEIFmtwoERGZvpeVw==}
+  rettiwt-api@https://pkg.pr.new/sxzz/Rettiwt-API/rettiwt-api@98e317f:
+    resolution: {tarball: https://pkg.pr.new/sxzz/Rettiwt-API/rettiwt-api@98e317f}
+    version: 4.2.0-alpha.0
     hasBin: true
 
   rettiwt-auth@2.1.0:
     resolution: {integrity: sha512-N3G1kX/4TFYvUumxcACHO9ngVnhM+DhpuRn2/JxWlgHuztAQShbO9ux3hfMducCqzzjdcMLPJhrEDt9fwSbpaQ==}
     hasBin: true
 
-  rettiwt-core@4.3.0:
-    resolution: {integrity: sha512-oT+TZTFNTyQfllda9qBWdfe6K16D+m0YLo1AqXTyHpK4NgckHqFegeQAS7LDA4OGekqFtufYFN6ugnDw8T2Cbw==}
+  rettiwt-core@4.4.0-alpha.1:
+    resolution: {integrity: sha512-XsjngqQL2yoV0q4E8XtBVE0Hd0u8B3gx/+RUFbgfNhLFcwjHMC3Cpmvo7u3zPyR7fcGH8xaRMbBIi1/BURBYxg==}
     engines: {node: ^20.11.1}
 
   reusify@1.0.4:
@@ -6150,7 +6151,7 @@ snapshots:
       path-parse: 1.0.7
       supports-preserve-symlinks-flag: 1.0.0
 
-  rettiwt-api@4.1.1:
+  rettiwt-api@https://pkg.pr.new/sxzz/Rettiwt-API/rettiwt-api@98e317f:
     dependencies:
       axios: 1.6.3
       chalk: 4.1.2
@@ -6158,7 +6159,7 @@ snapshots:
       commander: 11.1.0
       https-proxy-agent: 7.0.2
       rettiwt-auth: 2.1.0
-      rettiwt-core: 4.3.0
+      rettiwt-core: 4.4.0-alpha.1
     transitivePeerDependencies:
       - debug
       - supports-color
@@ -6173,7 +6174,7 @@ snapshots:
       - debug
       - supports-color
 
-  rettiwt-core@4.3.0:
+  rettiwt-core@4.4.0-alpha.1:
     dependencies:
       axios: 1.6.3
       form-data: 4.0.0

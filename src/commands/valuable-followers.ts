@@ -20,7 +20,7 @@ export function initValuableFollowers(bot: Bot): BotCommand {
       followers = await paginate(async (cursor, page, count) => {
         await editMessage(
           msg,
-          `正在保存 ${user.fullName} 的关注者，第 ${page} 页...`,
+          `正在获取 ${user.fullName} 的关注者，第 ${page} 页...`,
         )
         return ctx.rettiwt.user.followers(user.id, count, cursor)
       }, 40)
@@ -29,7 +29,9 @@ export function initValuableFollowers(bot: Bot): BotCommand {
     }
 
     followers = followers
-      .filter((follower) => follower.followersCount > 0)
+      .filter(
+        (follower) => follower.followersCount > 0 && !follower.isFollowing,
+      )
       .sort((a, b) => b.followersCount - a.followersCount)
 
     await editMessage(msg, `共 ${followers.length} 个关注者`)
