@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@antfu/utils':
-        specifier: ^0.7.10
-        version: 0.7.10
+        specifier: ^8.1.0
+        version: 8.1.0
       '@upstash/redis':
         specifier: ^1.34.3
         version: 1.34.3
