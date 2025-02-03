@@ -34,8 +34,8 @@ importers:
         specifier: ^4.6.0
         version: 4.6.0(@types/eslint@9.6.1)(@typescript-eslint/eslint-plugin@8.20.0(@typescript-eslint/parser@8.20.0(eslint@9.19.0(jiti@2.4.2))(typescript@5.7.3))(eslint@9.19.0(jiti@2.4.2))(typescript@5.7.3))(eslint@9.19.0(jiti@2.4.2))(typescript@5.7.3)
       '@sxzz/prettier-config':
-        specifier: ^2.1.0
-        version: 2.1.0
+        specifier: ^2.1.1
+        version: 2.1.1
       '@types/lodash.chunk':
         specifier: ^4.2.9
         version: 4.2.9
@@ -833,8 +833,8 @@ packages:
     peerDependencies:
       eslint: ^9.5.0
 
-  '@sxzz/prettier-config@2.1.0':
-    resolution: {integrity: sha512-7uw0uLrrxCq9KssVN1cQPgGYY++nb79Yl73ZVUlruBwFBWTyyEfx5FytIuz+vafiMZ04naeOLSvwrZa8BbjGbg==}
+  '@sxzz/prettier-config@2.1.1':
+    resolution: {integrity: sha512-owu4VkMj7838H60tbUP+Rty/rtx2BsHShDPU3pn67o94NVZO4mJ3vHxkxjmQwbrdKfDLNTLJMDq5PrVFo6CVfg==}
 
   '@telegraf/types@7.1.0':
     resolution: {integrity: sha512-kGevOIbpMcIlCDeorKGpwZmdH7kHbqlk/Yj6dEpJMKEQw5lk0KVQY0OLXaCswy8GqlIVLd5625OB+rAntP9xVw==}
@@ -3890,7 +3890,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@sxzz/prettier-config@2.1.0': {}
+  '@sxzz/prettier-config@2.1.1': {}
 
   '@telegraf/types@7.1.0': {}
 
