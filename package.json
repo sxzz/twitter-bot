@@ -5,6 +5,7 @@
   "scripts": {
     "prepare": "nitropack prepare",
     "dev": "nitropack dev",
+    "start": "tsx --env-file=.env src/launch.ts",
     "build": "nitropack build",
     "preview": "node .output/server/index.mjs",
     "lint": "eslint --cache .",
