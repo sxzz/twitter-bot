@@ -24,8 +24,8 @@
     "@sxzz/eslint-config": "^5.1.1",
     "@sxzz/prettier-config": "^2.2.0",
     "@types/lodash.chunk": "^4.2.9",
-    "eslint": "^9.20.1",
-    "prettier": "^3.5.1",
+    "eslint": "^9.21.0",
+    "prettier": "^3.5.2",
     "typescript": "^5.7.3"
   },
   "engines": {
