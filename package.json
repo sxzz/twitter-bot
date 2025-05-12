@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@antfu/utils": "^9.2.0",
-    "@upstash/redis": "^1.34.8",
+    "@upstash/redis": "^1.34.9",
     "dedent": "^1.6.0",
     "lodash.chunk": "^4.2.0",
     "nitropack": "latest",
