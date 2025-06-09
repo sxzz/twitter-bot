@@ -12,8 +12,8 @@ importers:
         specifier: ^9.2.0
         version: 9.2.0
       '@upstash/redis':
-        specifier: ^1.34.9
-        version: 1.34.9
+        specifier: ^1.35.0
+        version: 1.35.0
       dedent:
         specifier: ^1.6.0
         version: 1.6.0
@@ -22,7 +22,7 @@ importers:
         version: 4.2.0
       nitropack:
         specifier: latest
-        version: 2.11.12(@netlify/blobs@8.2.0)(@upstash/redis@1.34.9)(webpack-sources@3.2.3)
+        version: 2.11.12(@netlify/blobs@8.2.0)(@upstash/redis@1.35.0)(webpack-sources@3.2.3)
       rettiwt-api:
         specifier: https://pkg.pr.new/sxzz/Rettiwt-API/rettiwt-api@98e317f
         version: https://pkg.pr.new/sxzz/Rettiwt-API/rettiwt-api@98e317f
@@ -1254,8 +1254,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@upstash/redis@1.34.9':
-    resolution: {integrity: sha512-7qzzF2FQP5VxR2YUNjemWs+hl/8VzJJ6fOkT7O7kt9Ct8olEVzb1g6/ik6B8Pb8W7ZmYv81SdlVV9F6O8bh/gw==}
+  '@upstash/redis@1.35.0':
+    resolution: {integrity: sha512-WUm0Jz1xN4DBDGeJIi2Y0kVsolWRB2tsVds4SExaiLg4wBdHFMB+8IfZtBWr+BP0FvhuBr5G1/VLrJ9xzIWHsg==}
 
   '@vercel/nft@0.27.7':
     resolution: {integrity: sha512-FG6H5YkP4bdw9Ll1qhmbxuE8KwW2E/g8fJpM183fWQLeVDGqzeywMIeJ9h2txdWZ03psgWMn6QymTxaDLmdwUg==}
@@ -1676,9 +1676,6 @@ packages:
 
   crossws@0.3.5:
     resolution: {integrity: sha512-ojKiDvcmByhwa8YYqbQI/hg7MEU0NC03+pSdEq4ZUnZR9xXpwk7E43SMNGkn+JxJGPFtNvQ48+vV2p+P1ml5PA==}
-
-  crypto-js@4.2.0:
-    resolution: {integrity: sha512-KALDyEYgpY+Rlob/iriUtjV6d5Eq+Y191A5g4UqLAi8CyGP9N1+FdVbkc1SxKc2r4YAYqG8JzO2KGL+AizD70Q==}
 
   cssesc@3.0.0:
     resolution: {integrity: sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==}
@@ -5181,9 +5178,9 @@ snapshots:
   '@unrs/resolver-binding-win32-x64-msvc@1.7.8':
     optional: true
 
-  '@upstash/redis@1.34.9':
+  '@upstash/redis@1.35.0':
     dependencies:
-      crypto-js: 4.2.0
+      uncrypto: 0.1.3
 
   '@vercel/nft@0.27.7(rollup@4.41.0)':
     dependencies:
@@ -5663,8 +5660,6 @@ snapshots:
   crossws@0.3.5:
     dependencies:
       uncrypto: 0.1.3
-
-  crypto-js@4.2.0: {}
 
   cssesc@3.0.0: {}
 
@@ -7271,7 +7266,7 @@ snapshots:
       p-wait-for: 5.0.2
       qs: 6.14.0
 
-  nitropack@2.11.12(@netlify/blobs@8.2.0)(@upstash/redis@1.34.9)(webpack-sources@3.2.3):
+  nitropack@2.11.12(@netlify/blobs@8.2.0)(@upstash/redis@1.35.0)(webpack-sources@3.2.3):
     dependencies:
       '@cloudflare/kv-asset-handler': 0.4.0
       '@netlify/functions': 3.1.8(rollup@4.41.0)
@@ -7339,7 +7334,7 @@ snapshots:
       unenv: 2.0.0-rc.17
       unimport: 5.0.1
       unplugin-utils: 0.2.4
-      unstorage: 1.16.0(@netlify/blobs@8.2.0)(@upstash/redis@1.34.9)(db0@0.3.2)(ioredis@5.6.1)
+      unstorage: 1.16.0(@netlify/blobs@8.2.0)(@upstash/redis@1.35.0)(db0@0.3.2)(ioredis@5.6.1)
       untyped: 2.0.0
       unwasm: 0.3.9(webpack-sources@3.2.3)
       youch: 4.1.0-beta.7
@@ -8298,7 +8293,7 @@ snapshots:
       '@unrs/resolver-binding-win32-ia32-msvc': 1.7.8
       '@unrs/resolver-binding-win32-x64-msvc': 1.7.8
 
-  unstorage@1.16.0(@netlify/blobs@8.2.0)(@upstash/redis@1.34.9)(db0@0.3.2)(ioredis@5.6.1):
+  unstorage@1.16.0(@netlify/blobs@8.2.0)(@upstash/redis@1.35.0)(db0@0.3.2)(ioredis@5.6.1):
     dependencies:
       anymatch: 3.1.3
       chokidar: 4.0.3
@@ -8310,7 +8305,7 @@ snapshots:
       ufo: 1.6.1
     optionalDependencies:
       '@netlify/blobs': 8.2.0
-      '@upstash/redis': 1.34.9
+      '@upstash/redis': 1.35.0
       db0: 0.3.2
       ioredis: 5.6.1
 
