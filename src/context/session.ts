@@ -1,5 +1,5 @@
 import { session, type Context } from 'telegraf'
-import { redis } from '../utils/redis'
+import { redis, redisGet, redisSet } from '../utils/redis'
 import type { AsyncSessionStore } from 'telegraf/session'
 
 export enum State {
@@ -22,10 +22,10 @@ export interface SessionContext extends Context {
 const prefix = 'telegraf:'
 const store: AsyncSessionStore<any> = {
   get(key) {
-    return redis.get<any>(prefix + key)
+    return redisGet(prefix + key)
   },
-  set(key, session) {
-    return redis.set(prefix + key, session)
+  set(key, session: unknown) {
+    return redisSet(prefix + key, session)
   },
   delete(key) {
     return redis.del(prefix + key)

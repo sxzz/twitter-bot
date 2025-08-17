@@ -1,11 +1,18 @@
+import { scheduler } from 'node:timers/promises'
+import {
+  TwitterError,
+  type CursoredData,
+  type Tweet,
+  type User,
+} from 'rettiwt-api'
 import { escapeText } from './telegram'
-import type { CursoredData, Tweet, User } from 'rettiwt-api'
 
 export async function paginate<T extends Tweet | User>(
-  exector: (
+  executor: (
     cursor: string | undefined,
     page: number,
     count: number,
+    retry: number,
   ) => Promise<CursoredData<T>>,
   count: number,
 ): Promise<T[]> {
@@ -14,10 +21,30 @@ export async function paginate<T extends Tweet | User>(
   let page = 1
 
   while (true) {
-    const res = await exector(cursor, page, count)
+    if (cursor) {
+      await scheduler.wait(500)
+    }
+
+    let retry = 0
+    let res: CursoredData<T> | undefined
+    do {
+      try {
+        res = await executor(cursor, page, count, retry)
+      } catch (error) {
+        if (error instanceof TwitterError && retry < 3) {
+          retry++
+          await scheduler.wait(3000)
+        } else {
+          throw error
+        }
+      }
+    } while (!res)
+
     data.push(...res.list)
     cursor = res.next
-    if (res.list.length < count) break
+    if (res.list.length < count) {
+      break
+    }
     page++
   }
   return data

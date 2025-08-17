@@ -12,7 +12,9 @@ export const twitterMiddleware: MiddlewareFn<
   if (ctx.session?.apiToken) {
     Object.defineProperty(ctx, 'rettiwt', {
       get() {
-        return new Rettiwt({ apiKey: ctx.session!.apiToken })
+        return new Rettiwt({
+          apiKey: ctx.session!.apiToken,
+        })
       },
     })
   }

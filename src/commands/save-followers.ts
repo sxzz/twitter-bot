@@ -1,6 +1,6 @@
-import { objectPick } from '@antfu/utils'
+import { pick } from 'es-toolkit'
 import { requireRegister } from '../middleware/require-register'
-import { redis } from '../utils/redis'
+import { redis, redisSet } from '../utils/redis'
 import { editMessage } from '../utils/telegram'
 import { paginate } from '../utils/twitter'
 import type { Bot } from '..'
@@ -23,35 +23,34 @@ export function initSaveFollowers(bot: Bot): BotCommand {
       user = await ctx.rettiwt.user.details(username)
       if (!user) return ctx.reply('用户不存在')
     } catch (error) {
+      console.error(error)
       return ctx.reply(`获取关注者失败\n${error}`)
     }
 
     const msg = await ctx.reply(`正在保存 ${user.fullName} 的关注者`)
 
-    // TODO queue this
     let followers: User[] = []
     try {
-      followers = await paginate(async (cursor, page, count) => {
+      followers = await paginate(async (cursor, page, count, retry) => {
         await editMessage(
           msg,
-          `正在保存 ${user.fullName} 的关注者，第 ${page} 页...`,
-        )
+          `正在保存 ${user.fullName} 的关注者，第 ${page} 页...${retry > 0 ? ` (重试 ${retry} 次)` : ''}`,
+        ).catch(() => {})
         return ctx.rettiwt.user.followers(user.id, count, cursor)
       }, 40)
     } catch (error) {
+      console.error(error)
       return editMessage(msg, `获取关注者失败\n${error}`)
     }
 
     const simplified = followers
-      .map((user) =>
-        objectPick(user, ['id', 'fullName', 'userName', 'description']),
-      )
+      .map((user) => pick(user, ['id', 'fullName', 'userName', 'description']))
       .sort((a, b) => a.id.localeCompare(b.id))
 
     const key = `followers:${user.id}:${Date.now()}`
     await Promise.all([
       redis.sadd(`followers:${user.id}`, key),
-      redis.set(key, simplified),
+      redisSet(key, simplified),
     ])
     return editMessage(msg, `已保存 ${followers.length} 个关注者。`)
   })

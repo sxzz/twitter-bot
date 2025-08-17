@@ -1,35 +1,33 @@
 {
   "name": "twitter-bot",
   "private": true,
+  "packageManager": "pnpm@10.14.0",
   "type": "module",
   "scripts": {
-    "prepare": "nitropack prepare",
-    "dev": "nitropack dev",
-    "start": "tsx --env-file=.env src/launch.ts",
-    "build": "nitropack build",
-    "preview": "node .output/server/index.mjs",
+    "start": "tsx --env-file=.env.local src/index.ts",
+    "build": "tsdown",
     "lint": "eslint --cache .",
     "format": "prettier --cache --write .",
-    "typecheck": "nitropack prepare && tsc"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@antfu/utils": "^9.2.0",
-    "@upstash/redis": "^1.35.3",
     "dedent": "^1.6.0",
     "es-toolkit": "^1.39.10",
-    "nitropack": "^2.12.4",
+    "ioredis": "^5.7.0",
     "rettiwt-api": "https://pkg.pr.new/sxzz/Rettiwt-API/rettiwt-api@a8c2210",
     "telegraf": "^4.16.3"
   },
   "devDependencies": {
     "@sxzz/eslint-config": "^7.1.2",
     "@sxzz/prettier-config": "^2.2.3",
+    "@types/node": "^24.3.0",
     "eslint": "^9.33.0",
     "prettier": "^3.6.2",
+    "tsdown": "^0.14.1",
     "typescript": "^5.9.2"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=20.19.0"
   },
   "prettier": "@sxzz/prettier-config"
 }

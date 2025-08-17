@@ -1,8 +1,9 @@
 import { callbackQuery } from 'telegraf/filters'
-import { CallbackQuery, type Bot } from '..'
+import { CallbackQuery } from '../constants'
 import { requireRegister } from '../middleware/require-register'
 import { formatter } from '../utils/date'
 import { redis } from '../utils/redis'
+import type { Bot } from '..'
 import type { BotCommand, InlineKeyboardButton } from 'telegraf/types'
 
 export function initDeleteData(bot: Bot): BotCommand {

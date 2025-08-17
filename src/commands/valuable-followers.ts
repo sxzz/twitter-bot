@@ -16,14 +16,15 @@ export function initValuableFollowers(bot: Bot): BotCommand {
     const msg = await ctx.reply(`正在获取 ${user.fullName} 的关注者`)
     let followers: User[] = []
     try {
-      followers = await paginate(async (cursor, page, count) => {
+      followers = await paginate(async (cursor, page, count, retry) => {
         await editMessage(
           msg,
-          `正在获取 ${user.fullName} 的关注者，第 ${page} 页...`,
+          `正在获取 ${user.fullName} 的关注者，第 ${page} 页...${retry > 0 ? ` (重试 ${retry} 次)` : ''}`,
         )
         return ctx.rettiwt.user.followers(user.id, count, cursor)
       }, 40)
     } catch (error) {
+      console.error(error)
       return editMessage(msg, `获取关注者失败\n${error}`)
     }
 

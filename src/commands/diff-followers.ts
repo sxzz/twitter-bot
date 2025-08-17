@@ -1,13 +1,13 @@
 import dedent from 'dedent'
 import { callbackQuery } from 'telegraf/filters'
-import { CallbackQuery, type Bot } from '..'
+import { CallbackQuery } from '../constants'
 import { requireRegister } from '../middleware/require-register'
 import { formatter } from '../utils/date'
-import { redis } from '../utils/redis'
+import { redis, redisGet } from '../utils/redis'
 import { escapeText } from '../utils/telegram'
 import { formatUser } from '../utils/twitter'
+import type { Bot } from '..'
 import type { User } from 'rettiwt-api'
-
 import type { BotCommand, InlineKeyboardButton } from 'telegraf/types'
 
 export function initDiffFollowers(bot: Bot): BotCommand {
@@ -75,8 +75,8 @@ export function initDiffFollowers(bot: Bot): BotCommand {
       }
 
       const [prevFollowers, latestFollowers] = await Promise.all([
-        redis.get<User[]>(prevKey),
-        redis.get<User[]>(lastKey),
+        redisGet<User[]>(prevKey),
+        redisGet<User[]>(lastKey),
       ])
       if (!prevFollowers || !latestFollowers) {
         return ctx.editMessageText('未知数据错误')

@@ -1,12 +1,10 @@
 node_modules
-*.log*
-.nitro
-.cache
-.output
-.env
 dist
-.eslintcache
+
+*.log
 .DS_Store
+.eslintcache
+.env.local
 
 # Local Netlify folder
 .netlify
