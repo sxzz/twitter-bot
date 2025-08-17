@@ -10,12 +10,11 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v5
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4.1.0
-        with:
-          version: latest
 
       - name: Set node
         uses: actions/setup-node@v4
