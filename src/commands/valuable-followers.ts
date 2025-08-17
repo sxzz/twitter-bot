@@ -20,7 +20,7 @@ export function initValuableFollowers(bot: Bot): BotCommand {
         await editMessage(
           msg,
           `正在获取 ${user.fullName} 的关注者，第 ${page} 页...${retry > 0 ? ` (重试 ${retry} 次)` : ''}`,
-        )
+        ).catch(() => {})
         return ctx.rettiwt.user.followers(user.id, count, cursor)
       }, 40)
     } catch (error) {
