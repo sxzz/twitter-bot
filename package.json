@@ -4,8 +4,9 @@
   "packageManager": "pnpm@10.14.0",
   "type": "module",
   "scripts": {
-    "start": "tsx --env-file=.env.local src/index.ts",
+    "dev": "tsx --env-file=.env.local src/index.ts",
     "build": "tsdown",
+    "start": "node dist/index.js",
     "lint": "eslint --cache .",
     "format": "prettier --cache --write .",
     "typecheck": "tsc --noEmit"
