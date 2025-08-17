@@ -18,7 +18,7 @@
     "dedent": "^1.6.0",
     "es-toolkit": "^1.39.10",
     "nitropack": "^2.12.4",
-    "rettiwt-api": "^6.0.5",
+    "rettiwt-api": "https://pkg.pr.new/sxzz/Rettiwt-API/rettiwt-api@a8c2210",
     "telegraf": "^4.16.3"
   },
   "devDependencies": {
