@@ -16,7 +16,7 @@ export async function paginate<T extends Tweet | User>(
   while (true) {
     const res = await exector(cursor, page, count)
     data.push(...res.list)
-    cursor = res.next.value
+    cursor = res.next
     if (res.list.length < count) break
     page++
   }

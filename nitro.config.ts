@@ -1,13 +1,13 @@
 export default defineNitroConfig({
+  compatibilityDate: '2025-08-18',
   typescript: {
     strict: true,
     tsConfig: {
       compilerOptions: {
         module: 'preserve',
-        noEmit: true,
         moduleDetection: 'force',
         isolatedModules: true,
-        skipLibCheck: true,
+        verbatimModuleSyntax: true,
       },
     },
   },

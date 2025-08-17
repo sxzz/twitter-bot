@@ -1,5 +1,4 @@
-// TODO remove it
-import chunk from 'lodash.chunk'
+import { chunk } from 'es-toolkit'
 import { requireRegister } from '../middleware/require-register'
 import { editMessage } from '../utils/telegram'
 import { formatUser, paginate } from '../utils/twitter'
