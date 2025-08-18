@@ -7,6 +7,7 @@ export enum CallbackQuery {
   DELETE_DATA = '02',
   SELECT_ACCOUNT = '03',
   CONFIRM_TWEET = '04',
+  CLEAR_DATA = '05',
 }
 
 export interface QueryCallbackContext extends Context {
