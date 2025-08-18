@@ -5,25 +5,23 @@
   "type": "module",
   "scripts": {
     "dev": "tsx --env-file=.env.local src/index.ts",
-    "build": "tsdown",
+    "build": "tsdown --fixed-extension",
     "start": "node dist/index.js",
     "lint": "eslint --cache .",
     "format": "prettier --cache --write .",
     "typecheck": "tsc --noEmit"
   },
-  "dependencies": {
-    "dedent": "^1.6.0",
-    "es-toolkit": "^1.39.10",
-    "ioredis": "^5.7.0",
-    "rettiwt-api": "https://pkg.pr.new/sxzz/Rettiwt-API/rettiwt-api@a8c2210",
-    "telegraf": "^4.16.3"
-  },
   "devDependencies": {
     "@sxzz/eslint-config": "^7.1.2",
     "@sxzz/prettier-config": "^2.2.3",
     "@types/node": "^24.3.0",
+    "dedent": "^1.6.0",
+    "es-toolkit": "^1.39.10",
     "eslint": "^9.33.0",
+    "ioredis": "^5.7.0",
     "prettier": "^3.6.2",
+    "rettiwt-api": "https://pkg.pr.new/sxzz/Rettiwt-API/rettiwt-api@a8c2210",
+    "telegraf": "^4.16.3",
     "tsdown": "^0.14.1",
     "typescript": "^5.9.2"
   },

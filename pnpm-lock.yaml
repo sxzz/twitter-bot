@@ -7,22 +7,6 @@ settings:
 importers:
 
   .:
-    dependencies:
-      dedent:
-        specifier: ^1.6.0
-        version: 1.6.0
-      es-toolkit:
-        specifier: ^1.39.10
-        version: 1.39.10
-      ioredis:
-        specifier: ^5.7.0
-        version: 5.7.0
-      rettiwt-api:
-        specifier: https://pkg.pr.new/sxzz/Rettiwt-API/rettiwt-api@a8c2210
-        version: https://pkg.pr.new/sxzz/Rettiwt-API/rettiwt-api@a8c2210
-      telegraf:
-        specifier: ^4.16.3
-        version: 4.16.3
     devDependencies:
       '@sxzz/eslint-config':
         specifier: ^7.1.2
@@ -33,12 +17,27 @@ importers:
       '@types/node':
         specifier: ^24.3.0
         version: 24.3.0
+      dedent:
+        specifier: ^1.6.0
+        version: 1.6.0
+      es-toolkit:
+        specifier: ^1.39.10
+        version: 1.39.10
       eslint:
         specifier: ^9.33.0
         version: 9.33.0(jiti@2.5.1)
+      ioredis:
+        specifier: ^5.7.0
+        version: 5.7.0
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
+      rettiwt-api:
+        specifier: https://pkg.pr.new/sxzz/Rettiwt-API/rettiwt-api@a8c2210
+        version: https://pkg.pr.new/sxzz/Rettiwt-API/rettiwt-api@a8c2210
+      telegraf:
+        specifier: ^4.16.3
+        version: 4.16.3
       tsdown:
         specifier: ^0.14.1
         version: 0.14.1(typescript@5.9.2)

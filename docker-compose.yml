@@ -1,0 +1,7 @@
+services:
+  twitter-bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    restart: unless-stopped
