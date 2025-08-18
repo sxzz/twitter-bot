@@ -1,6 +1,5 @@
 import dedent from 'dedent'
-import { callbackQuery } from 'telegraf/filters'
-import { CallbackQuery } from '../constants'
+import { callbackQuery, CallbackQuery } from '../context/query-callback'
 import { requireRegister } from '../middleware/require-register'
 import { formatter } from '../utils/date'
 import { redis, redisGet } from '../utils/redis'
@@ -36,66 +35,70 @@ export function initDiffFollowers(bot: Bot): BotCommand {
     })
   })
 
-  bot.on(callbackQuery('data'), async (ctx, next) => {
-    const token = ctx.callbackQuery.data.slice(0, 2) as CallbackQuery
-    const data = ctx.callbackQuery.data.slice(3)
+  bot.action(callbackQuery(CallbackQuery.DIFF_FOLLOWERS), (ctx) => {
     ctx.session ||= {}
+    const firstDiff = ctx.callbackData
 
-    if (token === CallbackQuery.DIFF_FOLLOWERS) {
-      ctx.session.firstDiff = data
-      const keys = ctx.session.diffKeys!
-      return Promise.all([
-        ctx.answerCbQuery('已选择'),
-        ctx.editMessageReplyMarkup({
-          inline_keyboard: genInlineKeyboardButton(keys, data),
-        }),
-      ]).catch((error) => ctx.reply(String(error)))
-    } else if (token === CallbackQuery.DIFF_FOLLOWERS_DONE) {
-      let prevKey = ctx.session.firstDiff
-      if (prevKey === data) {
-        return ctx.answerCbQuery('请选择不同的数据进行比较')
-      }
+    ctx.session.firstDiff = firstDiff
+    const keys = ctx.session.diffKeys!
 
-      ctx.session.firstDiff = undefined
-      if (!prevKey) {
-        return ctx.editMessageText('未知数据错误')
-      }
-      let lastKey = data
+    return Promise.all([
+      ctx.answerCbQuery('已选择'),
+      ctx.editMessageReplyMarkup({
+        inline_keyboard: genInlineKeyboardButton(keys, firstDiff),
+      }),
+    ]).catch((error) => ctx.reply(String(error)))
+  })
 
-      let prevDate = new Date(+prevKey.split(':')[2])
-      let lastDate = new Date(+lastKey.split(':')[2])
-      if (prevDate > lastDate) {
-        ;[prevKey, lastKey] = [lastKey, prevKey]
-        ;[prevDate, lastDate] = [lastDate, prevDate]
-      }
+  bot.action(callbackQuery(CallbackQuery.DIFF_FOLLOWERS_DONE), async (ctx) => {
+    ctx.session ||= {}
+    const data = ctx.callbackData
 
-      const [prevFollowers, latestFollowers] = await Promise.all([
-        redisGet<User[]>(prevKey),
-        redisGet<User[]>(lastKey),
-      ])
-      if (!prevFollowers || !latestFollowers) {
-        return ctx.editMessageText('未知数据错误')
-      }
+    let prevKey = ctx.session.firstDiff
+    if (prevKey === data) {
+      return ctx.answerCbQuery('请选择不同的数据进行比较')
+    }
 
-      const newFollowers = latestFollowers.filter(
-        (follower) => !prevFollowers.some((f) => f.id === follower.id),
-      )
-      const lostFollowers = prevFollowers.filter(
-        (follower) => !latestFollowers.some((f) => f.id === follower.id),
-      )
+    ctx.session.firstDiff = undefined
+    if (!prevKey) {
+      return ctx.editMessageText('未知数据错误')
+    }
+    let lastKey = data
 
-      if (newFollowers.length === 0 && lostFollowers.length === 0) {
-        return ctx.editMessageText('没有新增或失去关注者')
-      }
+    let prevDate = new Date(+prevKey.split(':')[2])
+    let lastDate = new Date(+lastKey.split(':')[2])
+    if (prevDate > lastDate) {
+      ;[prevKey, lastKey] = [lastKey, prevKey]
+      ;[prevDate, lastDate] = [lastDate, prevDate]
+    }
 
-      const newFollowersMsg = newFollowers.map(formatUser).join('\n')
-      const lostFollowersMsg = lostFollowers.map(formatUser).join('\n')
+    const [prevFollowers, latestFollowers] = await Promise.all([
+      redisGet<User[]>(prevKey),
+      redisGet<User[]>(lastKey),
+    ])
+    if (!prevFollowers || !latestFollowers) {
+      return ctx.editMessageText('未知数据错误')
+    }
 
-      const prevDatetime = escapeText(formatter.format(prevDate))
-      const lastDatetime = escapeText(formatter.format(lastDate))
+    const newFollowers = latestFollowers.filter(
+      (follower) => !prevFollowers.some((f) => f.id === follower.id),
+    )
+    const lostFollowers = prevFollowers.filter(
+      (follower) => !latestFollowers.some((f) => f.id === follower.id),
+    )
 
-      return ctx.editMessageText(
-        dedent(`
+    if (newFollowers.length === 0 && lostFollowers.length === 0) {
+      return ctx.editMessageText('没有新增或失去关注者')
+    }
+
+    const newFollowersMsg = newFollowers.map(formatUser).join('\n')
+    const lostFollowersMsg = lostFollowers.map(formatUser).join('\n')
+
+    const prevDatetime = escapeText(formatter.format(prevDate))
+    const lastDatetime = escapeText(formatter.format(lastDate))
+
+    return ctx.editMessageText(
+      dedent(`
           从 ${prevDatetime} 到 ${lastDatetime} 的关注者变化:
 
           新增关注者 \\(${newFollowers.length}\\):
@@ -104,20 +107,17 @@ export function initDiffFollowers(bot: Bot): BotCommand {
           失去关注者 \\(${lostFollowers.length}\\):
           ${lostFollowersMsg}
         `),
-        {
-          parse_mode: 'MarkdownV2',
-          link_preview_options: { is_disabled: true },
-        },
-      )
-    }
-
-    return next()
+      {
+        parse_mode: 'MarkdownV2',
+        link_preview_options: { is_disabled: true },
+      },
+    )
   })
 
   return { command, description: '比较指定用户的关注者变化' }
 }
 
-export function genInlineKeyboardButton(
+function genInlineKeyboardButton(
   keys: string[],
   selected?: string,
 ): InlineKeyboardButton[][] {

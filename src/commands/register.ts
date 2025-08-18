@@ -1,6 +1,6 @@
 import dedent from 'dedent'
 import { FetcherService } from 'rettiwt-api'
-import { RettiwtConfig } from 'rettiwt-api/dist/models/RettiwtConfig'
+import { RettiwtConfig } from 'rettiwt-api/dist/models/RettiwtConfig.js'
 import { State, updateAccount } from '../context/session'
 import { plainText } from '../utils/telegram'
 import type { Bot } from '..'

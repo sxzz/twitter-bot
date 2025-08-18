@@ -4,6 +4,7 @@ import type { AsyncSessionStore } from 'telegraf/session'
 
 export enum State {
   REGISTER_API_KEY,
+  SEND_TWEET,
 }
 
 export interface Account {
@@ -16,8 +17,11 @@ export interface SessionData {
   accounts?: Account[]
   currentAccount?: string
   state?: State
+
   diffKeys?: string[]
   firstDiff?: string
+
+  pendingTweet?: string
 }
 export interface SessionContext extends Context {
   session?: SessionData

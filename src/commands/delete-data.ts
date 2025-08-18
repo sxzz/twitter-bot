@@ -1,5 +1,4 @@
-import { callbackQuery } from 'telegraf/filters'
-import { CallbackQuery } from '../constants'
+import { callbackQuery, CallbackQuery } from '../context/query-callback'
 import { requireRegister } from '../middleware/require-register'
 import { formatter } from '../utils/date'
 import { redis } from '../utils/redis'
@@ -9,18 +8,22 @@ import type { BotCommand, InlineKeyboardButton } from 'telegraf/types'
 export function initDeleteData(bot: Bot): BotCommand {
   const command = 'delete_data'
   bot.command(command, requireRegister, async (ctx) => {
-    return ctx.reply('请选择要删除的数据', {
-      reply_markup: {
-        inline_keyboard: await genInlineKeyboardButton(ctx.account.id),
-      },
-    })
+    try {
+      return ctx.reply('请选择要删除的数据', {
+        reply_markup: {
+          inline_keyboard: await genInlineKeyboardButton(ctx.account.id),
+        },
+      })
+    } catch {
+      return ctx.reply('获取数据失败')
+    }
   })
 
-  bot.on(callbackQuery('data'), requireRegister, async (ctx, next) => {
-    const token = ctx.callbackQuery.data.slice(0, 2) as CallbackQuery
-    const data = ctx.callbackQuery.data.slice(3)
-
-    if (token === CallbackQuery.DELETE_DATA) {
+  bot.action(
+    callbackQuery(CallbackQuery.DELETE_DATA),
+    requireRegister,
+    async (ctx) => {
+      const data = ctx.callbackData
       try {
         await Promise.all([
           redis.del(data),
@@ -35,10 +38,8 @@ export function initDeleteData(bot: Bot): BotCommand {
       } catch (error) {
         return ctx.answerCbQuery(`删除失败\n${error}`)
       }
-    }
-
-    return next()
-  })
+    },
+  )
 
   return { command, description: '删除数据' }
 }

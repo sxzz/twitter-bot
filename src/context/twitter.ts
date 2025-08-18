@@ -20,11 +20,7 @@ export const twitterMiddleware: MiddlewareFn<
     : undefined
 
   if (account) {
-    Object.defineProperty(ctx, 'account', {
-      get() {
-        return account
-      },
-    })
+    ctx.account = account
     Object.defineProperty(ctx, 'rettiwt', {
       get() {
         return new Rettiwt({
