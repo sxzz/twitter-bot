@@ -1,4 +1,5 @@
 import { Telegraf } from 'telegraf'
+import { initCancel } from './commands/cancel'
 import { initClear } from './commands/clear'
 import { initDeleteData } from './commands/delete-data'
 import { initDiffFollowers } from './commands/diff-followers'
@@ -35,6 +36,7 @@ const commands: BotCommand[] = [
   initValuableFollowers(bot),
   initClear(bot),
   initDeleteData(bot),
+  initCancel(bot),
 ]
 
 const helpMsg = commands
