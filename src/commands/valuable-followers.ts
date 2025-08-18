@@ -10,7 +10,8 @@ export function initValuableFollowers(bot: Bot): BotCommand {
   const command = 'valuable_followers'
   bot.command(command, requireRegister, async (ctx) => {
     ctx.sendChatAction('typing')
-    const user = await ctx.rettiwt.user.details(ctx.session!.username!)
+
+    const user = await ctx.rettiwt.user.details(ctx.account.username)
     if (!user) return ctx.reply('用户不存在')
 
     const msg = await ctx.reply(`正在获取 ${user.fullName} 的关注者`)

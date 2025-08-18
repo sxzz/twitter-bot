@@ -11,7 +11,7 @@ export function initDeleteData(bot: Bot): BotCommand {
   bot.command(command, requireRegister, async (ctx) => {
     return ctx.reply('请选择要删除的数据', {
       reply_markup: {
-        inline_keyboard: await genInlineKeyboardButton(ctx.session!.userid!),
+        inline_keyboard: await genInlineKeyboardButton(ctx.account.id),
       },
     })
   })
@@ -24,14 +24,12 @@ export function initDeleteData(bot: Bot): BotCommand {
       try {
         await Promise.all([
           redis.del(data),
-          redis.srem(`followers:${ctx.session!.userid}`, data),
+          redis.srem(`followers:${ctx.account.id}`, data),
         ])
         await Promise.all([
           ctx.answerCbQuery('已删除'),
           ctx.editMessageReplyMarkup({
-            inline_keyboard: await genInlineKeyboardButton(
-              ctx.session!.userid!,
-            ),
+            inline_keyboard: await genInlineKeyboardButton(ctx.account.id),
           }),
         ])
       } catch (error) {

@@ -10,12 +10,7 @@ import type { BotCommand } from 'telegraf/types'
 export function initSaveFollowers(bot: Bot): BotCommand {
   const command = 'save_followers'
   bot.command(command, requireRegister, async (ctx) => {
-    const username = ctx.args[0] || ctx.session?.username
-    if (!username) {
-      return ctx.reply(
-        '请提供一个用户名，或者先使用 /register 登记你的推特账号',
-      )
-    }
+    const username = ctx.args[0] || ctx.account.username
 
     ctx.sendChatAction('typing')
     let user: User | undefined

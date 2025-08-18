@@ -1,9 +1,22 @@
 import dedent from 'dedent'
-import { Rettiwt, type User } from 'rettiwt-api'
-import { State } from '../context/session'
+import { FetcherService } from 'rettiwt-api'
+import { RettiwtConfig } from 'rettiwt-api/dist/models/RettiwtConfig'
+import { State, updateAccount } from '../context/session'
 import { plainText } from '../utils/telegram'
 import type { Bot } from '..'
+import type { AuthCredential } from 'rettiwt-api/dist/models/auth/AuthCredential'
 import type { BotCommand } from 'telegraf/types'
+
+interface User {
+  avatar_image_url: string
+  is_auth_valid: boolean
+  is_protected: boolean
+  is_suspended: boolean
+  is_verified: boolean
+  name: string
+  screen_name: string
+  user_id: string
+}
 
 export function initRegister(bot: Bot): BotCommand {
   const command = 'register'
@@ -19,43 +32,48 @@ export function initRegister(bot: Bot): BotCommand {
   })
 
   bot.on(plainText, async (ctx, next) => {
-    switch (ctx.session?.state) {
-      case State.REGISTER_API_KEY: {
-        ctx.sendChatAction('typing')
-        const apiToken = ctx.message.text.trim()
-        if (!apiToken) return ctx.reply('API key 不能为空，请重试。')
-
-        const rettiwt = new Rettiwt({ apiKey: apiToken })
-        try {
-          await rettiwt.user.recommended()
-        } catch {
-          return ctx.reply('API key 不正确，请重试。')
-        }
-        ctx.session.state = State.REGISTER_USERNAME
-        ctx.session.apiToken = apiToken
-        return ctx.replyWithMarkdownV2(
-          'API key 验证成功，请提供你的推特用户名，例如 `@someone`',
-        )
-      }
-      case State.REGISTER_USERNAME: {
-        let username = ctx.message.text.trim()
-        username = username[0] === '@' ? username.slice(1) : username
-
-        if (!username) return ctx.reply('用户名不能为空，请重试。')
-        let userInfo: User | undefined
-        try {
-          userInfo = await ctx.rettiwt.user.details(username)
-        } catch {}
-        if (!userInfo) return ctx.reply('用户不存在，请重试。')
-
-        ctx.session.state = undefined
-        ctx.session.username = username
-        ctx.session.userid = userInfo.id
-        return ctx.reply('🎉 登记成功！')
-      }
+    if (ctx.session?.state !== State.REGISTER_API_KEY) {
+      return next()
     }
 
-    return next()
+    ctx.session ||= {}
+
+    ctx.sendChatAction('typing')
+    const apiToken = ctx.message.text.trim()
+    if (!apiToken) return ctx.reply('API key 不能为空，请重试。')
+
+    const config = new RettiwtConfig({ apiKey: apiToken })
+    const fetcher = new FetcherService(config)
+
+    let users: User[]
+    try {
+      const url = 'https://api.x.com/1.1/account/multi/list.json'
+      // @ts-expect-error
+      const cred: AuthCredential = await fetcher._getCredential()
+      // @ts-expect-error
+      const transaction = await fetcher._getTransactionHeader('GET', url)
+      const headers = {
+        ...(cred.toHeader() as any),
+        ...transaction,
+      }
+      const response = (await fetch(url, {
+        method: 'GET',
+        headers,
+      }).then((resp) => resp.json())) as { users: User[] }
+      users = response.users
+    } catch {
+      return ctx.reply('API key 不正确，请重试。')
+    }
+
+    for (const user of users) {
+      ctx.session.currentAccount ||= user.user_id
+      updateAccount(ctx, {
+        apiToken,
+        username: user.screen_name,
+        id: user.user_id,
+      })
+    }
+    return ctx.reply('🎉 登记成功！')
   })
 
   return { command, description: '登记你的推特账号至本机器人' }
