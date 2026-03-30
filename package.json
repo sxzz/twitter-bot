@@ -23,7 +23,7 @@
     "rettiwt-api": "https://pkg.pr.new/sxzz/Rettiwt-API/rettiwt-api@a8c2210",
     "telegraf": "^4.16.3",
     "tsdown": "^0.15.4",
-    "typescript": "^5.9.2"
+    "typescript": "^6.0.2"
   },
   "engines": {
     "node": ">=20.19.0"
