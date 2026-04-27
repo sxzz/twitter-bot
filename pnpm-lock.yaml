@@ -1755,7 +1755,7 @@ packages:
     resolution: {integrity: sha512-seS2Tj26TBVOC2NIc2rOe2y2ZO7efxITtLZcGSOnHHNOQ7CkiUBfw0Iw2ck6xkIhPwLhKNLS8BO+hEpngQlqzw==}
 
   rettiwt-api@https://pkg.pr.new/sxzz/Rettiwt-API/rettiwt-api@a8c2210:
-    resolution: {tarball: https://pkg.pr.new/sxzz/Rettiwt-API/rettiwt-api@a8c2210}
+    resolution: {integrity: sha512-DOpbr4FTkv20L46Zzqf96xfMgco3zaa21w3c+uezuZLmVC0TODBkpUH43sCVFTekjhy6t/XpKORrze6Lk6b6WQ==, tarball: https://pkg.pr.new/sxzz/Rettiwt-API/rettiwt-api@a8c2210}
     version: 6.0.5
     engines: {node: ^22.13.1}
     hasBin: true
