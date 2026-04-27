@@ -1,7 +1,7 @@
 {
   "name": "twitter-bot",
   "private": true,
-  "packageManager": "pnpm@10.33.0",
+  "packageManager": "pnpm@10.33.2",
   "type": "module",
   "scripts": {
     "dev": "tsx --env-file=.env.local src/index.ts",
