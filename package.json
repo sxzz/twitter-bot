@@ -1,7 +1,7 @@
 {
   "name": "twitter-bot",
   "private": true,
-  "packageManager": "pnpm@10.33.4",
+  "packageManager": "pnpm@10.34.5",
   "type": "module",
   "scripts": {
     "dev": "tsx --env-file=.env.local src/index.ts",
@@ -22,7 +22,7 @@
     "prettier": "^3.6.2",
     "rettiwt-api": "https://pkg.pr.new/sxzz/Rettiwt-API/rettiwt-api@a8c2210",
     "telegraf": "^4.16.3",
-    "tsdown": "^0.22.0",
+    "tsdown": "^0.23.0",
     "typescript": "^6.0.2"
   },
   "engines": {
