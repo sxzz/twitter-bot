@@ -14,7 +14,7 @@
   "devDependencies": {
     "@sxzz/eslint-config": "^7.1.4",
     "@sxzz/prettier-config": "^2.2.4",
-    "@types/node": "^24.5.2",
+    "@types/node": "^26.0.0",
     "dedent": "^1.7.0",
     "es-toolkit": "^1.39.10",
     "eslint": "^9.36.0",
